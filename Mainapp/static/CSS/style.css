@@ -1,0 +1,53 @@
+.background{
+    background-color: blue;
+}
+
+
+
+.btn:hover{
+    background-color: navy;
+    color:black
+    
+}
+
+.banner-section{
+    position: relative;
+}
+.banner-btn{
+   width: 200px;
+   position: absolute;
+   left: 50px;
+}
+
+.banner-btn:hover{
+    background-color: navy;
+}
+
+.banner-btn:hover{
+    box-shadow:0 0  20px black;
+}
+
+#banner-btn1{
+    top: 150px;
+}
+
+#banner-btn2{
+    top: 300px;
+}
+
+#banner-btn3{
+    top:450px;
+}
+
+.card-title{
+    height: 50px;
+
+}
+
+.clu{
+    height: 620px;
+}
+
+.tab{
+    height: 500px;
+}

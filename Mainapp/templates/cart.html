@@ -1,0 +1,78 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}
+<title>Eshop | Cart Section</title>
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <h1 class="background text-center text-light rounded my-1"> Products Add On Your Card </h1>
+    
+        <div class="table-responsive">
+            <table class="table table-hover table-striped table-bordered">
+                <tr>
+                    <th>Product Image</th>
+                    <th>Product Name</th>
+                    <th>Maincategory </th>
+                    <th>Subcategory </th>
+                    <th>Brand </th>
+                    <th>Color </th>
+                    <th>Size </th>
+                    <th>Base Price </th>
+                    <th>Discount </th>
+                    <th>Final Price </th>
+                    <th>Total Qyentity</th>
+                    <th>Add Product</th>
+                    <th>Dicress Product</th>
+                    <th>Remove From The Cart</th>
+                </tr>
+
+
+                {% for i in cart %}
+                <tr>
+                    <td><img src="{{i.pic}}" width="140px" height="100px" class="rounded" alt=""></td>
+                    <td>{{i.name}}</td>
+                    <td>{{i.maincategory}} </td>
+                    <td>{{i.subcategory}} </td>
+                    <td>{{i.brand}}</td>
+                    <td>{{i.color}}</td>
+                    <td>{{i.size}}</td>
+                    <td>{{i.baseprice}} </td>
+                    <td>{{i.discount}}% </td>
+                    <td>{{i.total}} </td>
+                    <td>{{i.qty}}</td>
+                    <td><a href="/update-cart/{{i.pid}}/inc/"><i class="bi bi-file-plus fs-3"></i></a></td>
+                    <td><a href="/update-cart/{{i.pid}}/dec/"><i class="bi bi-dash fs-3"></i></a></td>
+                    <td><a href="/delete-cart/{{i.pid}}/"><i class="bi bi-trash fs-3"></i></a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    <div class="row">
+        <div class="col-md-6 col-12"></div>
+        <div class="col-md-6 col-12">
+            <table class="table table-bordered table-hover table-striped">
+                <tr>
+                    <th>Total Price </th>
+                    <td>{{total}}</td>
+                </tr>
+                <tr>
+                    <th>Shipping Charge</th>
+                    <td>{{shipping}}</td>
+                </tr>
+                {% if final %}
+                <tr>
+                    <th>Final Amount</th>
+                    <td>{{final}} &#8377;</td>
+                </tr>
+                {% endif %}
+                 
+                
+                
+            </table>
+            <tr>
+                <a href="/checkout/" class="background btn text-center text-light w-100 btn-sm mb-2">Check Out </a>
+            </tr>
+        </div>
+    </div>
+</div>
+{% endblock %}

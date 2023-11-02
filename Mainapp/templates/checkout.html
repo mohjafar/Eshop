@@ -1,0 +1,145 @@
+{% extends 'home.html' %}
+{% load static %}
+{% block title %}
+<title>Eshop | Cart Section</title>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <h1 class="background text-center text-light rounded my-2"> Your Address For This  Product </h1>
+            <div class="table-responsive my-2">
+
+                <table class="table table-hover table-bordered table-striped clu">
+
+                    <tr>
+                        <th>User Full Name</th>
+                        <td>{{user.name}}</td>
+                    </tr>
+                    <tr>
+                        <th>User Name</th>
+                        <td>{{user.username}}</td>
+                    </tr>
+                    <tr>
+                        <th> Email</th>
+                        <td>{{user.email}}</td>
+                    </tr>
+                    <tr>
+                        <th> Phone</th>
+                        <td>{{user.phone}}</td>
+                    </tr>
+                    <tr>
+                        <th> Addressline 1</th>
+                        <td>{{user.addressline1}}</td>
+                    </tr>
+                    <tr>
+                        <th> Addressline 2</th>
+                        <td>{{user.addressline2}}</td>
+                    </tr>
+                    <tr>
+                        <th> Addressline 3</th>
+                        <td>{{user.addressline3}}</td>
+                    </tr>
+                    <tr>
+                        <th> Pin</th>
+                        <td>{{user.pin}}</td>
+                    </tr>
+
+                    <tr>
+                        <th> City</th>
+                        <td>{{user.city}}</td>
+                    </tr>
+
+
+                    <tr>
+                        <th> State</th>
+                        <td>{{user.state}}</td>
+                    </tr>
+
+
+                </table>
+                <a class="btn background text-light my-2 w-100 ml-2" href="/update/">Update Address If You Want</a>
+            </div>
+
+        </div>
+
+        <div class="col-md-6 col-12">
+            <h1 class="background text-center text-light rounded my-2"> Product Details & Total Amount</h1>
+            <div class="table-responsive">
+                <table class="table table-hover table-striped table-bordered">
+                    <tr>
+                        <th>Product Image</th>
+                        <th>Product Name</th>
+                        <th>Brand </th>
+                        <th>Color </th>
+                        <th>Size </th>
+                        <th>Base Price </th>
+                        <th>Discount </th>
+
+                        <th>Total Final Price</th>
+                        <th>Total Quentity</th>
+
+                    </tr>
+
+                    {% for i in cart %}
+                    <tr>
+                        <td><img src="{{i.pic}}" width="140px" height="100px" class="rounded" alt=""></td>
+                        <td>{{i.name}}</td>
+
+                        <td>{{i.brand}}</td>
+                        <td>{{i.color}}</td>
+                        <td>{{i.size}}</td>
+                        <td>{{i.baseprice}} </td>
+                        <td>{{i.discount}}% </td>
+                        <td>{{i.total}} </td>
+                        <td>{{i.qty}}</td>
+
+                    </tr>
+                    {% endfor %}
+                </table>
+
+
+            </div>
+            <table class="table table-bordered table-hover table-striped w-100">
+                <tr>
+                    <th>Total Price </th>
+                    <td>&#8377; {{total}}</td>
+                </tr>
+                <tr>
+                    <th>Shipping Charge</th>
+                    <td>{{shipping}}</td>
+                </tr>
+                {% if final %}
+                <tr>
+                    <th>Final Amount</th>
+                    <td> &#8377; {{final}}</td>
+                </tr>
+                {% endif %}
+                <form action="/order/" method="POST">
+                    {% csrf_token %}
+                    <tr>
+                        <th>Payment Mode</th>
+                        <td>
+                            <select name="mode" class="form-select">
+                                <option value="COD">COD</option>
+                                <option value="Net Banking">Net Banking/CARD/UPI/OTHER</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th colspan="2"><button  class="background btn text-center text-light w-100 btn-sm mb-2" type="submit">
+                            Check Out</button></th>
+                    </tr>
+            </table>
+            
+            </form>
+
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

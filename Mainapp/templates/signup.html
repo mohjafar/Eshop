@@ -1,0 +1,63 @@
+{% extends 'home.html' %}
+{% block title %}
+<title>Eshop | Signup Section</title>
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5 ">
+    <div class="row my-5">
+        <h1 class="background text-light text-center rounded">Signup Section </h1>
+        {% for i in messages %}
+
+        <div class="alert alert-danger alert-dismissible fade show p-3 mt-2 text-center" role="alert">
+
+            {{i}}
+
+            <button type="button" class="btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+
+
+        <form method="POST" action="">
+            {% csrf_token %}
+            <div style="margin-right: 10px;">
+                <div class="row mb-3">
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" class="form-control" name="name" required placeholder="Enter Your Full Name">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">User Name</label>
+                        <input type="text" class="form-control" required name="username" placeholder="Enter User Name">
+                    </div>
+                </div>
+                <div class="row  mb-3">
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">Email Address</label>
+                        <input type="email" class="form-control" name="email" required placeholder="Username">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">Enter Phone Number</label>
+                        <input type="number" class="form-control" name="phone" required placeholder="Username">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">Password</label>
+                        <input type="password" name="password" class="form-control" required placeholder="Enter Password">
+                    </div>
+                    <div class="col-md-6 col-12">
+                        <label class="form-label">Confirm Password</label>
+                        <input type="password" name="cpassword" required class="form-control"
+                            placeholder="Enter Confirm Password">
+                    </div>
+
+                </div>
+            </div>
+            <button type="submit" class="btn background text-light w-100  ">Create Account</button>
+        </form>
+        <a href="/login/" class="text-decoration-none">Already User? Login To Your Account</a>
+    </div>
+</div>
+
+{% endblock %}
