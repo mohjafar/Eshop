@@ -315,7 +315,6 @@ def OrderPage(Request):
                 orderCurrency = "INR"
                 paymentOrder = client.order.create(dict(amount=orderAmount,currency=orderCurrency,payment_capture=1))
                 paymentId = paymentOrder['id']
-                check.mode="Net Banking"
                 check.save()
                 return render(Request,"pay.html",{
                     "amount":orderAmount,
@@ -429,10 +428,11 @@ def CreateNewPassword(Request):
 @login_required(login_url='/login/')
 def paymentSuccess(request,rppid,rpoid,rpsid):
     buyer = Buyer.objects.get(username=request.user)
-    check = Checkout.objects.filter(buyer=buyer)
+    check = Checkout.objects.filter(user=buyer)
     check=check[::-1]
     check=check[0]
     check.rppid=rppid
+    check.paymentmode=1
     # check.rpoid=rpoid
     # check.rpsid=rpsid
     check.paymentstatus=1
