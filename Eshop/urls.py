@@ -20,7 +20,7 @@ urlpatterns = [
     path('delete-cart/<int:pid>/',views.deletecart),
     path('update-cart/<int:pid>/<str:op>/',views.UpadeCart),
     path('wishlist/',views.wish),
-    path('wishlist/<int:pid>/',views.AddToWishlist),
+    path('wishlist1/<int:pid>/',views.AddToWishlist),
     path('delete-Wishlist/<int:pid>/',views.deleteWishlist),
     path('checkout/',views.CheckoutPage),
     path('order/',views.OrderPage),

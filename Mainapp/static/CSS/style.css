@@ -1,6 +1,14 @@
 .background{
-    background-color: blue;
+    background-color: blueviolet;
 }
+
+.nav-item:hover .dropdown-menu
+
+    {display: block;
+    margin-top: -10px;
+    margin-left: 5px;
+    background-color: rgb(253, 241, 241);
+    }
 
 
 

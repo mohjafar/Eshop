@@ -37,7 +37,6 @@ def shop(Request,mc,sc,br):
     brand=Brand.objects.all()
     return render(Request,'shop.html',{'data':data,'maincategory':maincategory,'subcategory':subcategory,'brand':brand,'mc':mc,'sc':sc,'br':br})
 
-@login_required(login_url="/login/")
 def singleProduct(Request,id):
     try:
       data=Product.objects.get(id=id)
@@ -64,7 +63,7 @@ def signupPage(Request):
                 user.save()
                 b.save()
                 subject = 'Your Buyer Account Is Created : Team Eshop'
-                message ='Hellow  ' +b.name+ '  Thanks To Create A Buyer Account, \n Now You Can Buy Any Products :  Team Eshop'
+                message ='Hello  ' +b.name+',' '\nThanks To Create A Buyer Account. \nNow You Can Buy Any Products :  Team Eshop'
                 email_from = settings.EMAIL_HOST_USER
                 recipient_list = [b.email]
                 send_mail( subject, message, email_from, recipient_list )
@@ -173,7 +172,7 @@ def cartfrontpage(Request):
     return render(Request,'cart.html',{'cart':c,'final':final,'total':total,'shipping':shipping})
 
 
-
+@login_required(login_url='/login/')
 def deletecart(Request,pid):
     cart=Request.session.get('cart',None)
     if(str(pid) in cart):
@@ -184,6 +183,8 @@ def deletecart(Request,pid):
     Request.session['cart']=cart
     return redirect('/cart/')
 
+
+@login_required(login_url='/login/')
 def UpadeCart(Request,pid,op):
     cart=Request.session.get('cart',None)
     if(str(pid) in cart):
@@ -202,45 +203,40 @@ def UpadeCart(Request,pid,op):
 
 @login_required(login_url='/login/')
 def AddToWishlist(Request,pid):
-    try:
+    try:   
+   
         user=Buyer.objects.get(username=Request.user.username)
         p=Product.objects.get(id=pid)
         try:
-            w=Wishlist.objects.get(user=user,product=p)
-        except:    
+             w=Wishlist.objects.get(user=user,product=p)
+        except:
             w=Wishlist()
             w.user=user
             w.product=p
             w.save() 
-        buyer=Buyer.objects.get(username=Request.user.username)
-        wishlist=Wishlist.objects.filter(user=buyer)
-        # orders=Checkout.objects.filter(user=buyer)
-    except:
-        return redirect('/admin/')
-    return redirect("/wishlist/")    
+    except:        
+          pass
+    return redirect("/wishlist/")
+        # return redirect('/admin/')
     # return render(Request,'wishlist.html',{'Wishlist':wishlist,'user':buyer})
 
-
+@login_required(login_url='/login/')
 def wish(Request):
-    buyer=Buyer.objects.get(username=Request.user.username)
-    user=User.objects.get(username=Request.user.username)
-    # c=[]
-    # total=0
-    # # shipping=0
-    # if(cart is not None):
-    #     for value in cart.values():
-    #         total=total+value['total']
-    #         c.append(value)
-    #     if(total<1000 and total>0 ):
-    #         shipping=150
-    # final=total+shipping
-    wishlist=Wishlist.objects.filter(user=user)
+    # wishlist=Request.session.get('wishlist',None)
+   
+    user=User.objects.get(username=Request.user)
+    if(user.is_superuser):
+        return redirect("/admin/")
+    elif(user is  None):
+        messages.error(Request,"Please Login")
+    else:   
+        buyer=Buyer.objects.get(username=user.username)
+        wishlist=Wishlist.objects.filter(user=buyer)
     return render(Request,'wishlist.html',{'wishlist':wishlist})  
-
 # ,'final':final,'total':total,'shipping':shipping
 
 
-
+@login_required(login_url='/login/')
 def deleteWishlist(Request,pid):
                try: 
                     user=Buyer.objects.get(username=Request.user.username)
@@ -254,6 +250,8 @@ def deleteWishlist(Request,pid):
                    pass
                return redirect('/wishlist/')            
 
+
+@login_required(login_url='/login/')
 def CheckoutPage(Request):
     cart=Request.session.get('cart',None)
     try:
@@ -306,7 +304,7 @@ def OrderPage(Request):
                 cp.total=value['total']  
                 cp.save()  
             subject = 'Your Order Has Been Placed : Team Eshop'
-            message ='Thanks To Shop With Us   \nNow You Can Track Your Order On Your Profile Page :Team Eshop'
+            message ='Thanks To Shop With Us   \nNow You Can Track Your Order On Your Order Page :Team Eshop'
             email_from = settings.EMAIL_HOST_USER
             recipient_list = [user.email,]
             send_mail( subject, message, email_from, recipient_list ) 
